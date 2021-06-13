@@ -1,0 +1,31 @@
+version: '3.6'
+
+
+services:
+  trader-django:
+    ports:
+      - '8001:8001'
+    env_file:
+      - ./server/env/dev.env
+    volumes:
+      - ./server/:/opt/trader/django
+    command: bash docker/entrypoint-dev.sh
+
+  trader-celery:
+    env_file:
+      - ./server/env/dev.env
+    volumes:
+      - ./server/:/opt/trader/django
+
+  trader-postgres:
+    ports:
+      - '5432:5432'
+
+  trader-redis:
+    ports:
+      - '6379:6379'
+
+  trader-rabbitmq:
+    ports:
+      - '5672:5672'
+      - '15672:15672'
